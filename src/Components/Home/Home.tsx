@@ -6,6 +6,7 @@ import Posts from './Categories/Posts/Posts';
 import styled from "styled-components";
 import LeftBar2 from './User/LeftBar2';
 import { useEffect } from 'react';
+import ChatbotHome from './ChatBot/ChatbotHome';
 // import { useNavigate } from 'react-router-dom';
 
 
@@ -23,7 +24,7 @@ const PostSection = styled.div`
   width: 100%;
 `;
 
-const UserPage=styled.div`
+const UserPage = styled.div`
   margin-bottom: 60px;
 `
 
@@ -35,7 +36,7 @@ const Home = () => {
   /// back button logic
   useEffect(() => {
     sessionStorage.setItem('previousTab', window.location.href);
-  }, []); 
+  }, []);
 
   return (
     <div>
@@ -49,12 +50,18 @@ const Home = () => {
       <div className='lg:ml-14'>
         <Main />
       </div>
-     <UserPage>
-     {!UserLoginStatus ? <LeftBar />:<LeftBar2/>}
-     </UserPage>
+      <UserPage>
+        {!UserLoginStatus ? <LeftBar /> : <LeftBar2 />}
+      </UserPage>
       <PostSection>
         <Posts />
       </PostSection>
+      {UserLoginStatus &&
+        <div>
+          <ChatbotHome />
+        </div>
+      }
+
     </div>
   );
 }
