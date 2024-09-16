@@ -434,3 +434,24 @@ const PostForm: React.FC = () => {
 };
 
 export default PostForm;
+
+
+
+
+
+// {loading ? (<Loader fullLoader={true} height="400px" isBackground={false}/>):(
+//   <div className="flex flex-col gap-4 mt-11">
+//   {posts.map((post) => (
+//     <PostCard
+//       key={post.id}
+//       postTitle={post.postTitle}
+//       createdDate={post.createdDate}
+//       description={post.description}
+//       firstName={post.firstName}
+//       url={post.url}
+//       urlType={post.urlType}
+//       onMediaClick={() => handleMediaClick(post)}
+//     />
+//   ))}
+// </div>
+// )}

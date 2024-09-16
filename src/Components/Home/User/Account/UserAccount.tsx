@@ -50,12 +50,12 @@ const UserAccount = () => {
         <div className='w-[480px] h-[500px] mt-10 bg-stone-100 shadow-xl rounded-md p-6'>
           <div className='ml-4'>
             <img className="w-20 h-20 my-6 rounded" src={DeveloperImage} alt="Large avatar" />
-            <p className='text-2xl font-bold my-5'>{FirtName} {LastName}</p>
+            <p className='text-2xl font-bold my-5'>{FirtName || "Loading...."} {LastName|| "Loading...."} </p>
             <p className=''>Front-end Developer</p>
             <p className=''>Hyderabad, INDIA</p>
             <div className='my-2'>
               <p className='text-gray-600'>Email Address</p>
-              <p className='text-black'>{Email}</p>
+              <p className='text-black'>{Email || 'Loading.....'}</p>
             </div>
             <div className='my-2'>
               <p className='text-gray-600'>Home Address</p>
@@ -63,7 +63,7 @@ const UserAccount = () => {
             </div>
             <div className='my-2'>
               <p className='text-gray-600'>Phone Number</p>
-              <p className='text-black'>+91 {FilterMobile}</p>
+              <p className='text-black'>+91 {FilterMobile || 'Loading......'}</p>
             </div>
             <div className='my-2'>
               <p className='text-gray-00'>Software Skills</p>

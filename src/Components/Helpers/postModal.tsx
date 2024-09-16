@@ -70,8 +70,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
                   id="urlType"
                   name="urlType"
                   className="block w-full mt-2 border border-gray-300 rounded p-2"
-                  value={values.urlType} // Bind value to Formik
-                  onChange={(e) => setFieldValue("urlType", e.target.value)} // Update Formik value
+                  value={values.urlType}
+                  onChange={(e:any) => setFieldValue("urlType", e.target.value)} 
                 >
                   <option value="image">Image</option>
                   <option value="video">Video</option>

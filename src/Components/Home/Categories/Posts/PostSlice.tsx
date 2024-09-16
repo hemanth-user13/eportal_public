@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { PostProps } from "./type";
 
-const USERPOSTURL = "http://localhost:8001/userpost";
+const USERPOSTURL = "https://e-portal-json-server.onrender.com/userpost";
 
 export const fetchUserpostData = createAsyncThunk(
   "Users/UserPosts",
