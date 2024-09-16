@@ -55,6 +55,9 @@ const LeftBar = () => {
   return (
     <div className="w-full sm:w-64 lg:h-[1400px] h-[700px] bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 sm:rounded-l-lg shadow-lg absolute right-0 p-6 flex flex-col items-center justify-center sm:justify-start">
       <div className="sm:absolute sm:top-3 sm:left-7 text-center sm:text-left">
+        {/* <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-16 border border-gray-400 rounded shadow">
+          Button
+        </button> */}
         <p className="text-3xl sm:text-2xl mb-4">
           <Link
             to="e-portal/login"

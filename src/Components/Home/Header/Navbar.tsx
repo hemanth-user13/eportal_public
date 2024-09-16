@@ -52,7 +52,7 @@ const AppFeatures = styled.div`
 const AppStyle = styled.div`
   position: absolute;
   top: 15px;
-  right: -20px;
+  right: 20px;
   color: #9e9c9c;
 
   svg {
@@ -75,7 +75,7 @@ const DarknLightModeStyle = styled.div`
 const NotificationStyle = styled.div`
    position: absolute;
   top: 15px;
-  right: 20px;
+  right: -20px;
   color: #9e9c9c;
 
   svg {
@@ -113,6 +113,7 @@ const Navbar: React.FC<NavBarProps> = ({ pageName }) => {
     localStorage.removeItem("mobile");
     navigate("/");
   };
+  const UserLoginStatus = localStorage.getItem('isLoggedIn');
 
   const username = localStorage.getItem("firstName");
   const lastName = localStorage.getItem("lastName");
@@ -166,21 +167,24 @@ const Navbar: React.FC<NavBarProps> = ({ pageName }) => {
               <div className="flex flex-shrink-0 items-left">
                 <NavBarTitle>
                   <p className="text-white text-2xl font-serif mr-96">
-                    E-Portal {pageName ? pageName : ""}
+                   <Link to="/e-portal"> E-Portal</Link> {pageName ? pageName : ""}
                   </p>
                 </NavBarTitle>
                 <SearchBar />
               </div>
             </div>
             <AppFeatures>
-              <NotificationStyle>
-                <IoIosNotifications />
-              </NotificationStyle>
-              <div onClick={handleAppModal}>
+              
+              {UserLoginStatus && <div onClick={handleAppModal}>
                 <AppStyle>
                   <RiApps2Fill />
                 </AppStyle>
-              </div>
+              </div>}
+              {UserLoginStatus && 
+              <NotificationStyle>
+              <IoIosNotifications />
+            </NotificationStyle>
+              }
              <div onClick={handledarknLight}>
              <DarknLightModeStyle>
                 <MdDarkMode />
@@ -208,7 +212,7 @@ const Navbar: React.FC<NavBarProps> = ({ pageName }) => {
                 Sign Out
               </button>
             </ul>
-          ) : (<p className="">Please Login</p>)}
+          ) : (<Link to="e-portal/login"><p className="">Please Login</p></Link>)}
         </div>
       )}
 
