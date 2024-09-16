@@ -48,10 +48,10 @@ const Main = () => {
             )}
             {visibleCards >= 2 && (
               <Card
-                Cardicon={<DescriptionIcon />}
-                CardButtonName="View Tax Reports"
-                OnCardClick={() => handleCardClick("/tax", true)}
-              />
+              Cardicon={<PostAddIcon />}
+              CardButtonName="See posts"
+              OnCardClick={() => handleCardClick("e-portal/postData", true)}
+            />
             )}
             {visibleCards >= 3 && (
               <Card
@@ -68,11 +68,11 @@ const Main = () => {
               />
             )}
             {visibleCards >= 5 && (
-              <Card
-                Cardicon={<PostAddIcon />}
-                CardButtonName="See posts"
-                OnCardClick={() => handleCardClick("e-portal/postData", true)}
-              />
+             <Card
+             Cardicon={<DescriptionIcon />}
+             CardButtonName="View Tax Reports"
+             OnCardClick={() => handleCardClick("/tax", true)}
+           />
             )}
             {visibleCards >= 6 && (
               <Card
