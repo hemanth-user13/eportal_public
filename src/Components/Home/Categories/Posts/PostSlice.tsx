@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { PostProps } from "./type";
+import {  PostProps } from "./type";
 
 const USERPOSTURL = "https://e-portal-json-server.onrender.com/userpost";
+// const USERLIKES="http://localhost:8001/UserLikes";
 
 export const fetchUserpostData = createAsyncThunk(
   "Users/UserPosts",
@@ -11,6 +12,15 @@ export const fetchUserpostData = createAsyncThunk(
     return response.data;
   }
 );
+
+// export const FtechUserLikes=createAsyncThunk(
+//   "User/LikesData",
+//   async()=>{
+//     const response=await axios.get<PostLikeProps[]>(USERLIKES)
+//     console.log("the likes data is",response.data)
+//     return response.data;
+//   }
+// )
 
 interface PostState {
   data: PostProps[];
@@ -44,5 +54,8 @@ const PostSlice = createSlice({
       });
   },
 });
+
+
+
 
 export default PostSlice.reducer;

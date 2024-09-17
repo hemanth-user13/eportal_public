@@ -10,3 +10,13 @@ export interface PostProps{
     urlType:string
 
 }
+
+export interface PostLikeProps{
+    id:string,
+    UserLoginStatus:boolean,
+    username:string,
+    lastName:string,
+    Mobile:string,
+    UserId:string,
+    Email:string
+}

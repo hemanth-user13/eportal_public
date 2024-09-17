@@ -1,253 +1,204 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import ReactPlayer from 'react-player';
+import styled from 'styled-components';
+import { AiFillLike } from "react-icons/ai";
+import { FaCommentAlt } from "react-icons/fa";
 import axios from "axios";
-import Swal from "sweetalert2";
-import Navbar from "../../Header/Navbar";
-import styled from "styled-components";
-import ReactPlayer from "react-player";
-import Modal from "../../../Helpers/postModal";
-import EditModal from "../../../Helpers/EditModal"; 
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@reduxjs/toolkit/query';
+import { AppDispatch } from '../../store';
+import { FetchUserLikes } from '../Home/Categories/Posts/PostLikeSlice';
 
-const PostPage = styled.div`
-  margin-top: 150px !important;
+const Card = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 `;
 
-const PostForm: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [mediaModalOpen, setMediaModalOpen] = useState(false);
-  const [editModalOpen, setEditModalOpen] = useState(false);  // State for edit modal
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-  const [userPosts, setUserPosts] = useState<Post[]>([]);
-  const [draggedPostId, setDraggedPostId] = useState<number | null>(null);
-  const [hoveredPostId, setHoveredPostId] = useState<number | null>(null);
-  const userId = localStorage.getItem("user_id");
-  const userName = localStorage.getItem("firstName");
+const PostInfo = styled.div`
+  flex: 1;
+  margin-left: 20px;
 
-  const handleAddPostClick = () => {
-    setIsModalOpen(true);
-  };
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
+  p {
+    margin-bottom: 5px;
+    font-size: 0.875rem;
+  }
 
-  const handlePostSubmit = async (values: {
-    postTitle: string;
-    files: string;
-    createdDate: string;
-    description: string;
-  }) => {
-    const firstName = localStorage.getItem("firstName");
+  .author {
+    color: #6b7280; 
+  }
 
-    const postData = {
-      ...values,
-      firstName,
-      userId,
-    };
+  .description {
+    color: #374151; 
+    margin-top: 8px;
+  }
 
+  .date {
+    color: #9ca3af; 
+    margin-top: 10px;
+    font-size: 0.75rem;
+  }
+`;
+
+const PostMedia = styled.div`
+  width: 230px;
+  height: auto;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+`;
+
+const LikeButtonStyle = styled.div<{ liked: boolean }>`
+  margin-right: 60px;
+  margin-top: 90px;
+  svg {
+    width: 30px;  
+    height: 40px; 
+    color: ${props => (props.liked ? 'blue' : 'gray')};
+    cursor: pointer;
+  }
+`;
+
+const CommentButtonStyle = styled.div`
+  margin-left: -40px;
+  margin-top: 90px;
+  svg {
+    width: 30px;  
+    height: 25px; 
+  }
+`;
+
+interface PostCardProps {
+  postId: string;  
+  postTitle: string;
+  createdDate: string;
+  description: string;
+  firstName: string;
+  url: string;
+  urlType: string;
+  onMediaClick: () => void;
+  initialLikeCount: number;  
+  initiallyLiked: boolean;  
+}
+
+const UserLoginStatus = localStorage.getItem('isLoggedIn');
+const username = localStorage.getItem("firstName");
+const lastName = localStorage.getItem("lastName");
+const Mobile = localStorage.getItem("mobile");
+const UserId = localStorage.getItem("user_id");
+const Email = localStorage.getItem("email");
+
+const InitialData = {
+  UserLoginStatus,
+  username,
+  lastName,
+  Mobile,
+  UserId,
+  Email,
+};
+
+const PostCard: React.FC<PostCardProps> = ({
+  postId,
+  postTitle,
+  createdDate,
+  description,
+  firstName,
+  url,
+  urlType,
+  onMediaClick,
+  initialLikeCount,
+  initiallyLiked
+}) => {
+  const dispatch=useDispatch<AppDispatch>();
+  const {data:Likes,loading,error}=useSelector((state:RootState)=>state.Likes)
+
+  console.log("the likes data from the redux",Likes)
+  const [likeCount, setLikeCount] = useState(initialLikeCount);
+  const [liked, setLiked] = useState(initiallyLiked);
+
+  const handleLike = async () => {
+    const USERPOSTURl = "http://localhost:8001/UserLikes";
     try {
-      await axios.post("http://localhost:8001/userpost", postData);
-      Swal.fire({
-        title: "Success!",
-        text: "Post published successfully!",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-      fetchUserPosts();
-      handleModalClose();
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Failed to publish the post. Please try again.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-    }
-  };
-
-  const fetchUserPosts = async () => {
-    try {
-      const response = await axios.get("http://localhost:8001/userpost");
-      const filteredPosts = response.data.filter(
-        (post: Post) => post.firstName === userName
-      );
-      setUserPosts(filteredPosts);
-    } catch (error) {
-      console.error("Failed to fetch user posts", error);
-    }
-  };
-
-  const handleMediaClick = (post: Post) => {
-    setSelectedPost(post);
-    setMediaModalOpen(true);
-  };
-
-  const handleMediaModalClose = () => {
-    setMediaModalOpen(false);
-    setSelectedPost(null);
-  };
-
-  const handlePublishButton = async () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to publish this post?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, publish it!",
-      cancelButtonText: "No, cancel!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const response = await axios.post(
-            "http://localhost:8001/userprivatePost"
-          );
-          console.log(response);
-
-          Swal.fire("Published!", "Your post has been published.", "success");
-          fetchUserPosts();
-        } catch (error) {
-          console.log("There is an error in the API", error);
-          Swal.fire(
-            "Error",
-            "There was an issue publishing the post.",
-            "error"
-          );
-        }
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire("Cancelled", "Your post was not published.", "error");
+      if (liked) {
+        await axios.delete(`${USERPOSTURl}/${postId}`, { data: InitialData });
+        setLikeCount(likeCount - 1);
+      } else {
+        await axios.post(USERPOSTURl, InitialData);
+        setLikeCount(likeCount + 1);
       }
-    });
-  };
-
-  useEffect(() => {
-    if (userId) {
-      fetchUserPosts();
-    }
-  }, [userId]);
-
-  const handleDragStart = (postId: number) => {
-    setDraggedPostId(postId);
-  };
-
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>, dropPostId: number) => {
-    event.preventDefault();
-
-    if (draggedPostId !== null) {
-      const draggedPostIndex = userPosts.findIndex(post => post.id === draggedPostId);
-      const dropPostIndex = userPosts.findIndex(post => post.id === dropPostId);
-
-      const updatedPosts = [...userPosts];
-      const [draggedPost] = updatedPosts.splice(draggedPostIndex, 1);
-      updatedPosts.splice(dropPostIndex, 0, draggedPost);
-
-      setUserPosts(updatedPosts);
-      setDraggedPostId(null);
+      setLiked(!liked);
+    } catch (error) {
+      console.log("Error updating like status:", error);
     }
   };
 
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  };
-
-  const renderMedia = (post: Post) => {
-    switch (post.urlType) {
+  const renderMedia = () => {
+    switch (urlType) {
       case "image":
-        return (
-          <img
-            src={post.url}
-            alt={post.postTitle}
-            className={`object-cover w-[350px] h-auto rounded-md cursor-pointer`}
-            onMouseEnter={() => setHoveredPostId(post.id)}
-            onMouseLeave={() => setHoveredPostId(null)}
-            onClick={() => handleMediaClick(post)}
-          />
-        );
+        return <img src={url} alt={postTitle} className="object-cover w-full h-auto" onClick={onMediaClick} />;
       case "video":
         return (
-          <div
-            onClick={() => handleMediaClick(post)}
-            className={`w-[320px] h-[200px] cursor-pointer`}
-            onMouseEnter={() => setHoveredPostId(post.id)}
-            onMouseLeave={() => setHoveredPostId(null)}
-          >
-            <ReactPlayer
-              url={post.url}
-              width="100%"
-              height="100%"
-              controls
-              light
-            />
-          </div>
+          <ReactPlayer
+            url={url}
+            className="object-cover w-full h-full"
+            width="100%"
+            height="100%"
+            controls
+            onClick={onMediaClick}
+          />
+        );
+      case "audio":
+        return (
+          <audio controls className="w-full" onClick={onMediaClick}>
+            <source src={url} type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
         );
       default:
         return null;
     }
   };
-
-  const handleEditButton = (post: Post) => {
-    setSelectedPost(post);
-    setEditModalOpen(true);
-  };
-
-  const handleSave = async (updatedPost: Post) => {
-    try {
-      await axios.put(`http://localhost:8001/userpost/${updatedPost.id}`, updatedPost);
-      Swal.fire({
-        title: "Success!",
-        text: "Post updated successfully!",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-      fetchUserPosts();
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Failed to update the post. Please try again.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-    }
-  };
+  useEffect(()=>{
+    dispatch(FetchUserLikes());
+  },[dispatch])
+  
 
   return (
-    <PostPage>
-      <Navbar />
-      <button onClick={handleAddPostClick} className="bg-blue-500 text-white px-4 py-2 rounded">
-        Add Post
-      </button>
-      <div className="flex flex-wrap mt-4">
-        {userPosts.map((post) => (
-          <div
-            key={post.id}
-            className="border p-4 m-2 rounded shadow-lg w-[350px] relative"
-            draggable
-            onDragStart={() => handleDragStart(post.id)}
-            onDrop={(e) => handleDrop(e, post.id)}
-            onDragOver={handleDragOver}
-          >
-            {renderMedia(post)}
-            <button
-              onClick={() => handleEditButton(post)}
-              className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded"
-            >
-              Edit
-            </button>
-          </div>
-        ))}
+    <Card>
+      <PostMedia onClick={onMediaClick}>
+        {renderMedia()}
+      </PostMedia>
+      <PostInfo>
+        <h3>{postTitle}</h3>
+        <p className="author">By {firstName}</p>
+        <p className="description">{description}</p>
+        <p className="date">{new Date(createdDate).toDateString()}</p>
+        <p>Likes: {likeCount}</p> {/* Display like count */}
+      </PostInfo>
+      <div className='' onClick={handleLike}>
+        <LikeButtonStyle liked={liked}>
+          <AiFillLike />
+        </LikeButtonStyle>
       </div>
-      <Modal isOpen={isModalOpen} onClose={handleModalClose} onSubmit={handlePostSubmit} />
-      <EditModal
-        isOpen={editModalOpen}
-        onClose={() => setEditModalOpen(false)}
-        post={selectedPost}
-        onSave={handleSave}
-      />
-      <Modal
-        isOpen={mediaModalOpen}
-        onClose={handleMediaModalClose}
-        post={selectedPost}
-      />
-    </PostPage>
+      <div className='hover:animate-pulse'>
+        <CommentButtonStyle>
+          <FaCommentAlt />
+        </CommentButtonStyle>
+      </div>
+    </Card>
   );
 };
 
-export default PostForm;
+export default PostCard;

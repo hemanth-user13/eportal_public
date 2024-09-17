@@ -1,6 +1,18 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
-import Close from '../../assets/cancel.png'
+// import Close from '../../assets/cancel.png'
+import { IoMdClose } from "react-icons/io";
+import styled from 'styled-components';
+
+
+export  const CloseIconStyle = styled.div`
+   margin-bottom: 10px;
+   margin-left: 10px;
+     svg {
+    width: 30px;  
+    height: 40px; 
+  }
+`
 
 interface MediaModalProps {
   isOpen: boolean;
@@ -15,7 +27,9 @@ const MediaModal: React.FC<MediaModalProps> = ({ isOpen, onClose, post }) => {
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
       <div className="bg-white p-8 rounded-lg max-w-3xl w-full">
         <div className='ml-[679px] mb-[-35px] w-12' onClick={onClose}>
-        <img src={Close} alt=''/>
+         <CloseIconStyle>
+         <IoMdClose />
+         </CloseIconStyle>
         </div>
         <h2 className="text-2xl font-semibold mb-4">{post.postTitle}</h2>
         <div className="mb-6">

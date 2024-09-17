@@ -1,8 +1,22 @@
 // import React from 'react'
 import ChatIcon from "../../../assets/chatbot.png"
-
+import { IoMdClose } from "react-icons/io";
 import { useState } from "react"
+import styled from "styled-components";
 
+
+const CloseIcoModalStyle = styled.div`
+   color: black;
+   position: absolute;
+   right: -1px;
+   top: 10px;
+   margin-right: 10px;
+   margin:10px ;
+   svg {
+    width: 30px;  
+    height: 40px; 
+  }
+`
 const ChatbotHome = () => {
     const [isOpen, setISopen] = useState(false);
     const toogleChat = () => {
@@ -10,6 +24,9 @@ const ChatbotHome = () => {
     }
     const firstName=localStorage.getItem("firstName")
     // const LastName=localStorage.getItem("lastName")
+    const handleClosemodal=()=>{
+        setISopen(false)
+    }
     return (
         <div>
             <button
@@ -26,9 +43,14 @@ const ChatbotHome = () => {
                     className="fixed bottom-[calc(4rem+1.5rem)] right-0 mr-4 bg-white p-6 rounded-lg border border-[#e5e7eb] w-[440px] h-[634px]">
 
                     <div className="flex flex-col space-y-1.5 pb-6">
-                        <h2 className="font-semibold text-lg tracking-tight">E-Chat</h2>
+                        <h2 className="font-semibold text-lg tracking-tight">Welcome to E-Chat {firstName || null}</h2>
                         <p className="text-sm text-[#6b7280] leading-3">Powered by Test Solutions</p>
                     </div>
+                  <div onClick={handleClosemodal}>
+                  <CloseIcoModalStyle>
+                        <IoMdClose/>
+                    </CloseIcoModalStyle>
+                  </div>
                     <div className="pr-4 h-[474px]" style={{ minWidth: " 100%; display: table;" }}>
                         <div className="flex gap-3 my-4 text-gray-600 text-sm flex-1"><span
                             className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
