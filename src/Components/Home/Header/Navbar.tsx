@@ -101,7 +101,7 @@ interface NavBarProps {
 const Navbar: React.FC<NavBarProps> = ({ pageName }) => {
   const [UserModal, setUserModal] = useState(false);
   const [AppModal, setAppModal] = useState(false)
-  const [Mode,SetMode]=useState(false)
+  const [Mode, SetMode] = useState(false)
 
   const navigate = useNavigate();
 
@@ -149,10 +149,10 @@ const Navbar: React.FC<NavBarProps> = ({ pageName }) => {
   const handleAppModal = () => {
     setAppModal((prev) => !prev)
   }
-  const handledarknLight=()=>{
+  const handledarknLight = () => {
     return (
       <div>
-        {Mode?<MdLightMode/>:<MdLightMode/>}
+        {Mode ? <MdLightMode /> : <MdLightMode />}
       </div>
     )
   }
@@ -167,29 +167,29 @@ const Navbar: React.FC<NavBarProps> = ({ pageName }) => {
               <div className="flex flex-shrink-0 items-left">
                 <NavBarTitle>
                   <p className="text-white text-2xl font-serif mr-96">
-                   <Link to="/e-portal"> E-Portal</Link> {pageName ? pageName : ""}
+                    <Link to="/e-portal"> E-Portal</Link> {pageName ? pageName : ""}
                   </p>
                 </NavBarTitle>
                 <SearchBar />
               </div>
             </div>
             <AppFeatures>
-              
+
               {UserLoginStatus && <div onClick={handleAppModal}>
                 <AppStyle>
                   <RiApps2Fill />
                 </AppStyle>
               </div>}
-              {UserLoginStatus && 
-              <NotificationStyle>
-              <IoIosNotifications />
-            </NotificationStyle>
+              {UserLoginStatus &&
+                <NotificationStyle>
+                  <IoIosNotifications />
+                </NotificationStyle>
               }
-             <div onClick={handledarknLight}>
-             <DarknLightModeStyle>
-                <MdDarkMode />
-              </DarknLightModeStyle>
-             </div>
+              <div onClick={handledarknLight}>
+                <DarknLightModeStyle>
+                  <MdDarkMode />
+                </DarknLightModeStyle>
+              </div>
             </AppFeatures>
             <div className="absolute right-[-120px]" onClick={handleUserAvatarModal}>
               <UserAvatar />
@@ -220,18 +220,20 @@ const Navbar: React.FC<NavBarProps> = ({ pageName }) => {
         <div className="w-[350px] h-[300px] absolute top-16 right-4 bg-white shadow-md rounded-md p-6">
           <div className="grid grid-cols-3 gap-7">
             <AppIconsStyle>
-              <Link to="e-portal/UserAccount">
-              <div className="flex flex-col items-center">
-                <RiAccountCircleFill />
-                <span>Account</span>
-              </div>
+              <Link to="UserAccount">
+                <div className="flex flex-col items-center">
+                  <RiAccountCircleFill />
+                  <span>Account</span>
+                </div>
               </Link>
             </AppIconsStyle>
             <AppIconsStyle>
-              <div className="flex flex-col items-center">
-                <MdHolidayVillage />
-                <span>Leaves</span>
-              </div>
+              <Link to="postData">
+                <div className="flex flex-col items-center">
+                  <IoShareSocialOutline />
+                  <span>Posts</span>
+                </div>
+              </Link>
             </AppIconsStyle>
             <AppIconsStyle>
               <div className="flex flex-col items-center">
@@ -240,12 +242,10 @@ const Navbar: React.FC<NavBarProps> = ({ pageName }) => {
               </div>
             </AppIconsStyle>
             <AppIconsStyle>
-             <Link to="e-portal/postData">
-             <div className="flex flex-col items-center">
-                <IoShareSocialOutline />
-                <span>Posts</span>
+              <div className="flex flex-col items-center">
+                <MdHolidayVillage />
+                <span>Leaves</span>
               </div>
-             </Link>
             </AppIconsStyle>
             <AppIconsStyle>
               <div className="flex flex-col items-center">

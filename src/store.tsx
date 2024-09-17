@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import PostSlice from "./Components/Home/Categories/Posts/PostSlice";
+import PostLikeSlice from "./Components/Home/Categories/Posts/PostLikeSlice";
 
 export const store = configureStore({
   reducer: {
-    posts:PostSlice
+    posts:PostSlice,
+    Likes:PostLikeSlice
   },
 });
 

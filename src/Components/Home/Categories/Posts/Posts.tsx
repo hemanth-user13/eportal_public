@@ -8,6 +8,9 @@ import MediaModal from "../../../Helpers/MediaModal";
 import SimpleLoader from '../../../Helpers/Loader';
 
 
+
+
+
 const Posts = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data: posts, loading, error } = useSelector((state: RootState) => state.posts);
@@ -35,7 +38,8 @@ const Posts = () => {
         <p className="text-xl md:text-2xl lg:text-3xl">Post section</p>
        
         {error && <p>Error: {error}</p>}
-        {loading && <SimpleLoader fullLoader={true} height="400px" isBackground={false} />}
+        {loading && <SimpleLoader/>}
+        {/* {loading && <p>Loading.......</p>} */}
         <div className="flex flex-col gap-4 mt-11">
           {posts.map((post) => (
             <PostCard

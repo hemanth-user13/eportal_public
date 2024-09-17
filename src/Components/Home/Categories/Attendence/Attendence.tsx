@@ -1,7 +1,20 @@
-import React from "react";
+// import React from 'react'
+import Navbar from "../../Header/Navbar";
+import { BackButtonStyle } from "../Posts/PostForm";
+import BackButton from "../../../Helpers/BackButton";
+
 
 const Attendence = () => {
-  return <div></div>;
-};
+  return (
+    <div>
+      <Navbar
+      pageName="Attendence"
+      />
+      <BackButtonStyle>
+        <BackButton/>
+      </BackButtonStyle>
+    </div>
+  )
+}
 
-export default Attendence;
+export default Attendence
