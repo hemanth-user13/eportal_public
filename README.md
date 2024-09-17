@@ -1,50 +1,24 @@
-# React + TypeScript + Vite
+# Employee Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The **Employee Portal** is a Single Sign-On (SSO) application built using **React**, **TypeScript**, and **Tailwind CSS**. 
 
-Currently, two official plugins are available:
+## Overview
+The primary objective of this application is to provide a dedicated platform for employees to manage their daily activities. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Features:
+- **Public Access**: Users can visit the website to view posts made by employees. However, to perform any actions, such as creating or interacting with posts, the user must log in.
+  
+- **Responsive Design**: The application is optimized for laptop and larger screen dimensions.
 
-## Expanding the ESLint configuration
+- **Frontend Only**: The application is entirely frontend-based, with no backend integration. All data is handled within the frontend environment.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **User Account Management**: The platform includes features for user account management and post creation by authorized users.
 
-- Configure the top-level `parserOptions` property like this:
+- **Post Management**: Users can:
+  - View specific posts created by other users.
+  - Edit, delete, and update their own posts.
+  - Upload media such as images, videos, or audio. The type of content determines how it is displayed on the platform.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Future Enhancements:
+- **AI Bot Integration**: Develop a specialized AI bot for employee support.
+- **Project Tracking**: Add a project status feature and other necessary tools for enhancing employee productivity.
