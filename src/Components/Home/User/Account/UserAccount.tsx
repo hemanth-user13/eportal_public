@@ -1,7 +1,7 @@
 // import React from 'react'
 import Navbar from '../../Header/Navbar'
 import { BackButtonStyle } from '../../Categories/Posts/PostForm'
-import BackButton from '../../../Helpers/BackButton'
+import BackButton from '../../../Helpers/BackButton1'
 import styled from 'styled-components';
 import DeveloperImage from '../../../../assets/icons8-developer-64.png'
 

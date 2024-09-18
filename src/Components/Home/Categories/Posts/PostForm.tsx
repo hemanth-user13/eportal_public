@@ -5,7 +5,7 @@ import Navbar from "../../Header/Navbar";
 import styled from "styled-components";
 import ReactPlayer from "react-player";
 import Modal from "../../../Helpers/postModal";
-import BackButton from "../../../Helpers/BackButton";
+import BackButton from "../../../Helpers/BackButton1";
 import EditModal from "../../../Helpers/EditModal";
 
 const PostPage = styled.div`

@@ -6,6 +6,7 @@ import PostCard from "../../../Helpers/PostCard";
 import MediaModal from "../../../Helpers/MediaModal";
 // import Loader from '../../../Helpers/Loader';
 import SimpleLoader from '../../../Helpers/Loader';
+// import SimpleLoader from "../../../Helpers/Loaders/Loader2";
 
 
 

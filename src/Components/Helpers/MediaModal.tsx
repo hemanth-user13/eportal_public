@@ -31,7 +31,7 @@ const MediaModal: React.FC<MediaModalProps> = ({ isOpen, onClose, post }) => {
          <IoMdClose />
          </CloseIconStyle>
         </div>
-        <h2 className="text-2xl font-semibold mb-4">{post.postTitle}</h2>
+        <h2 className="text-2xl font-bold mb-4">{post.postTitle}</h2>
         <div className="mb-6">
           {post.urlType === "image" && (
             <img src={post.url} alt={post.postTitle} className="w-full h-auto" />
@@ -46,7 +46,7 @@ const MediaModal: React.FC<MediaModalProps> = ({ isOpen, onClose, post }) => {
             </audio>
           )}
         </div>
-        <p>{post.description}</p>
+        <p className='flex items-center justify-center'>{post.description}</p>
         {/* <button
           className="mt-4 ml-72 bg-red-500 text-white px-4 py-2 rounded"
           onClick={onClose}
