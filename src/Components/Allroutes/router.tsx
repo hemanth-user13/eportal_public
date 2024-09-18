@@ -5,6 +5,7 @@ import UserAccount from "../Home/User/Account/UserAccount";
 import Posts from "../Home/Categories/Posts/Posts";
 import PostForm from "../Home/Categories/Posts/PostForm";
 import Attendence from "../Home/Categories/Attendence/Attendence";
+import PageNotFound from '../Home/PagenotFound/Pagenotfound'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ element }: { element: JSX.Element }) => {
@@ -24,7 +25,7 @@ const Router = () => {
           <Route path="e-portal/register" element={<Register />} />
           <Route path="e-portal/login" element={<LoginPage />} />
           <Route path="e-portal" element={<Main />} />
-
+          <Route path="*" element={<PageNotFound/>}/>
           <Route
             path="e-portal/UserAccount"
             element={<PrivateRoute element={<UserAccount />} />}
