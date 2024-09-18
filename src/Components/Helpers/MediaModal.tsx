@@ -5,7 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import styled from 'styled-components';
 
 
-export  const CloseIconStyle = styled.div`
+export const CloseIconStyle = styled.div`
    margin-bottom: 10px;
    margin-left: 10px;
      svg {
